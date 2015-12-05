@@ -1,8 +1,8 @@
 <?php session_start();
 session_unset();
 // check session variables
-print_r($_SESSION);
-print_r($_POST);
+//print_r($_SESSION);
+//print_r($_POST);
 ?>
 <!DOCTYPE html>
 <html>

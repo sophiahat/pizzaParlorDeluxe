@@ -3,8 +3,8 @@
 //echo $_SERVER['HTTP_REFERER'];
 
 // check session variables
-print_r($_SESSION);
-print_r($_POST);
+//print_r($_SESSION);
+//print_r($_POST);
 
 // variable to hold refering page
 //$httpReferer = "http://localhost:8888/PaceItStuff/PHP/PizzaParlorDeluxe/info.php";
@@ -53,7 +53,10 @@ require_once("includes/connect.php");
     $state = filter_input(INPUT_POST, "state");
     $zip = filter_input(INPUT_POST, "zip");
     $phone = filter_input(INPUT_POST, "phone");
-    
+    $subtotal = $_SESSION['subtotal'];
+    $tax = $_SESSION['tax'];
+    $total = $_SESSION['total'];
+//    print "$subtotal, $tax, $total";
 ?>
     <header class="header">
         <h1>Pizza Time</h1>
@@ -141,12 +144,14 @@ $_SESSION['phone'] = $phone;
 // check to see if current order customer is in database
 $sql = "SELECT custID, custEmail FROM customers WHERE custFName = '$first_name' AND custLName = '$last_name'";
 
-print $sql;
+//print $sql;
 // execute SQL statement
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
-
+//print_r($result);
+//print "<br>";
 if($result->num_rows == 0) {
-    print_r($result);
+//    print_r($result);
+//    print "<br>";
     // create a new customer record
     $sql = "INSERT INTO customers (custFName, custLName, custEmail, custAddress, custApartment, custCity, custState, custZip, custPhone) VALUES ('$first_name', '$last_name', '$email', '$address', '$apartment', '$city', '$state', '$zip', '$phone')";
     
@@ -157,23 +162,42 @@ if($result->num_rows == 0) {
     $custID = $con->insert_id;
 }
 else {
-    
+//    print"Finding a matching customer record";
+    print "<br>";
     while ($row = mysqli_fetch_array ($result, MYSQLI_ASSOC)) {
         if ($row['custEmail'] == $email) {
-        $custID = $row['custID'];
+            $custID = $row['custID'];
+//            print "Found email match <br>";
+//            break;
         
+        }else {
+            
+//            print "Same Customer name, different email";
+//            print "<br>";
+            $sql = "INSERT INTO customers (custFName, custLName, custEmail, custAddress, custApartment, custCity, custState, custZip, custPhone) VALUES ('$first_name', '$last_name', '$email', '$address', '$apartment', '$city', '$state', '$zip', '$phone')";
+    
+        // execute SQL statement
+        $result = mysqli_query($con, $sql) or die(mysqli_error($con));
+
+        // get custID from newly created record
+        $custID = $con->insert_id;
         }
     }
 }
 
 $date = getdate();
-$orderTime = $date['weekday']." ". $date['month']. " ". $date['mday']. ", ". $date['year']." ". $date['hours'].":".$date['minutes'].":".$date['seconds'];
-print $orderTime;
+$orderTime = $date['year']."-". $date['mon']. "-". $date['mday']. " ". $date['hours'].":".$date['minutes'].":".$date['seconds'];
+//print $orderTime;
+//print "<br>";
 //print $custID;
+//print "<br>";
 
 // sql statement for writing order
-$sql = "INSERT INTO orders (dateTimePlaced, custID, pizzaDesc, priceSub, tax, priceTotal) VALUES ('$orderTime', '$custID', '$pizzaDesc', '$')";
+$sql = "INSERT INTO orders (dateTimePlaced, custID, pizzaDesc, priceSub, tax, priceTotal) VALUES ('$orderTime', '$custID', '$pizzaDesc', '$subtotal', '$tax', '$total')";
 
+//print "Final output to database:  $sql";
+// execute SQL statement
+$result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
 ?>
 </body>
