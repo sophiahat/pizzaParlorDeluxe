@@ -1,5 +1,19 @@
-<?php
-    session_start();
+<?php session_start();
+//find http referer
+//echo $_SERVER['HTTP_REFERER'];
+
+// check session variables
+print_r($_SESSION);
+print_r($_POST);
+
+// variable to hold refering page
+//$httpReferer = "http://localhost:8888/PaceItStuff/PHP/PizzaParlorDeluxe/info.php";
+
+// requiring database connection
+require_once("includes/connect.php");
+
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -85,10 +99,13 @@ HERE;
                 <h3>Your Order Summary</h3>
 
 <?php
+    $pizzaDesc = $pizza_size . " " . $pizza_crust . " - ". $pizza_type;
     print "Size: $pizza_size inch<br>Crust: $pizza_crust<br>Type:$pizza_type<br><br>Extra Toppings: <br>";
     if(!$pizza_toppings == []){
+        $pizzaDesc .= "  add";
         foreach($pizza_toppings as $topping){
             print "$topping<br>";
+            $pizzaDesc .= " - " . $topping;
         }
     }
 
@@ -120,5 +137,44 @@ $_SESSION['phone'] = $phone;
     <footer>
         <p>Copyright 2015 Spencer Creative</p>
     </footer>
+<?php
+// check to see if current order customer is in database
+$sql = "SELECT custID, custEmail FROM customers WHERE custFName = '$first_name' AND custLName = '$last_name'";
+
+print $sql;
+// execute SQL statement
+$result = mysqli_query($con, $sql) or die(mysqli_error($con));
+
+if($result->num_rows == 0) {
+    print_r($result);
+    // create a new customer record
+    $sql = "INSERT INTO customers (custFName, custLName, custEmail, custAddress, custApartment, custCity, custState, custZip, custPhone) VALUES ('$first_name', '$last_name', '$email', '$address', '$apartment', '$city', '$state', '$zip', '$phone')";
+    
+    // execute SQL statement
+    $result = mysqli_query($con, $sql) or die(mysqli_error($con));
+    
+    // get custID from newly created record
+    $custID = $con->insert_id;
+}
+else {
+    
+    while ($row = mysqli_fetch_array ($result, MYSQLI_ASSOC)) {
+        if ($row['custEmail'] == $email) {
+        $custID = $row['custID'];
+        
+        }
+    }
+}
+
+$date = getdate();
+$orderTime = $date['weekday']." ". $date['month']. " ". $date['mday']. ", ". $date['year']." ". $date['hours'].":".$date['minutes'].":".$date['seconds'];
+print $orderTime;
+//print $custID;
+
+// sql statement for writing order
+$sql = "INSERT INTO orders (dateTimePlaced, custID, pizzaDesc, priceSub, tax, priceTotal) VALUES ('$orderTime', '$custID', '$pizzaDesc', '$')";
+
+
+?>
 </body>
 </html>

@@ -81,8 +81,10 @@ function orderUpdate(form) {
     extraToppingsPrice = 0;
     for(i = 0; i < custom_toppings.length; i++) {
         if(custom_toppings[i].checked) {
+//            alert(custom_toppings[i].value);
             extraToppings.push(toppings[i][1]);
-            extraToppingsPrice += toppings[i][2];    
+            extraToppingsPrice += toppings[i][2]; 
+//            alert(extraToppings);
         }
     }
     toppingsToggle(form);
@@ -276,13 +278,18 @@ function updateOrderHtml() {
     document.getElementById("pprice").innerHTML = price;
     document.getElementById("ptax").innerHTML = tax;
     document.getElementById("ptotal").innerHTML = total;
+    document.getElementById("subtotal").value = price;
+    document.getElementById('tax').value = tax;
+    document.getElementById('total').value = total;
 }   
 
 function toppingsToggle(form) {
     if(form.build.checked) {
         document.getElementById("toppings").style.display = "block";
         pizzaTypes[3][2] = extraToppings;
+//        alert(pizzaTypes[3][2]);
         price += extraToppingsPrice;
+        pizza_toppings = pizzaTypes[3][2];
         
     }else{
         document.getElementById("toppings").style.display = "none";

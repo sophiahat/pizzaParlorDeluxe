@@ -104,9 +104,12 @@
                                <input class="ptoppings" type="checkbox" name="ptoppings[5]" id="sundried_tomatoes" value="sundried_tomatoes" onclick="orderUpdate(this.form)">
                                <label for="sundried_tomatoes">Sundried Tomatoes</label>
                            </div>
+                        <input id="subtotal" type="hidden" name="subtotal" value="5">
+                        <input id="tax" type="hidden" name="tax" value="7">
+                        <input id="total" type="hidden" name="total" value="9">
                         </div>     
                    </fieldset>
-
+                    
                    <input class="submit_button" type="submit" value="Submit Order" onclick="submitPizza()">
                 </form>
             </article>
@@ -121,6 +124,7 @@
                 <p>Subtotal: <span id="pprice"></span></p>
                 <p>Tax: <span id="ptax"></span></p>
                 <p>Total: <span id="ptotal"></span></p>
+
                 
                
             </aside>

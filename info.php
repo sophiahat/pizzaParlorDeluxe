@@ -1,5 +1,8 @@
-<?php
-session_start();
+<?php session_start();
+session_unset();
+// check session variables
+print_r($_SESSION);
+print_r($_POST);
 ?>
 <!DOCTYPE html>
 <html>
@@ -51,6 +54,9 @@ if(filter_has_var(INPUT_POST, "ptoppings")){
 $pizza_size = filter_input(INPUT_POST, "pizza_size");
 $pizza_crust = filter_input(INPUT_POST, "crust_type");
 $pizza_type = filter_input(INPUT_POST, "pizza_type");
+$_SESSION['subtotal'] = filter_input(INPUT_POST, "subtotal");
+$_SESSION['tax'] = filter_input(INPUT_POST, "tax");
+$_SESSION['total'] = filter_input(INPUT_POST, "total");
 
 
 // print out the form elements
