@@ -14,7 +14,7 @@ else {
 require_once("../includes/connect.php");
 
 // SQL statement pulling in all orders
-$sql = "SELECT orders.orderID, orders.dateTimePlaced, orders.pizzaDesc, orders.priceSub, orders.tax, orders.priceTotal, orders.custID, customers.custID, customers.custFName, customers.custLName, customers.custEmail, customers.custAddress, customers.custApartment, customers.custCity, customers.custState, customers.custZip FROM orders INNER JOIN customers ON orders.custID=customers.custID";
+$sql = "SELECT orders.orderID, orders.dateTimePlaced, orders.pizzaDesc, orders.priceSub, orders.tax, orders.priceTotal, orders.custID, customers.custID, customers.custFName, customers.custLName, customers.custEmail, customers.custAddress, customers.custApartment, customers.custCity, customers.custState, customers.custZip FROM orders INNER JOIN customers ON orders.custID=customers.custID WHERE orders.completed='n'";
     
 
 // query database and determine error is failure
@@ -73,7 +73,7 @@ if($result->num_rows > 0 ) {
         $tableData .= "<td>" . $row['custID'] . "</td>";
         $tableData .= "<td>" . $row['custFName']. " ". $row['custLName'] . "</td>";
         $tableData .= "<td>" . $row['custAddress'] . ", ". $row['custApartment']. ", ". $row['custCity']. ", ". $row['custState']. " ". $row['custZip']. "</td>";
-//        $tableData .= "<td><input type='select' id='".$row['orderID']."'" name='delivered'></td></tr>";
+        $tableData .= "<td><input type='checkbox' name='".$row['orderID']."'></td></tr>";
         $tableData .= "</tr>";
 //        print $tableData;
     }
@@ -81,26 +81,8 @@ if($result->num_rows > 0 ) {
 }
 
 
-
-
-
-
-//foreach($orders as $order) {
-//    $subtotal = number_format($order['subtotal'], 2);
-//    $tax = number_format($order['tax'], 2);
-//    $total = number_format($order['total'],2);
-//    $tableData .= "<tr><td>$order[orderId]</td>
-//        <td>$order[date], $order[time]</td>
-//        <td>$order[pizzaSize] inch,  $order[pizzaCrust], $order[pizzaType],  $order[pizzaToppings]</td>
-//        <td>$subtotal</td>
-//        <td>$tax</td>
-//        <td>$total</td>
-//        <td>$order[name]</td>
-//        <td>$order[address], $order[city], $order[state], $order[zip]</td>
-//        <td><input type='checkbox' name='delivered[$order[orderId]]' value='$order[orderId]'></td></tr>";
-//    }
 print <<<HERE
-    <form name="orders" method="post" action="completeOrder.php">
+    <form name="orders" method="post" action="processCompleteOrders.php">
     <table rows="4"  border="1">
     <tr>
         <th>Ord#</th>

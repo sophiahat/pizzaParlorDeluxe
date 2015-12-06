@@ -13,17 +13,20 @@ else {
 // requiring the db connection file
 require_once("../includes/connect.php");
 
-// SQL statement
-$sql = "SELECT * FROM admins";
+// SQL statement pulling in all orders
+$sql = "SELECT orders.orderID, orders.dateTimePlaced, orders.pizzaDesc, orders.priceSub, orders.tax, orders.priceTotal, orders.custID, customers.custID, customers.custFName, customers.custLName, customers.custEmail, customers.custAddress, customers.custApartment, customers.custCity, customers.custState, customers.custZip FROM orders INNER JOIN customers ON orders.custID=customers.custID WHERE orders.completed='y'";
+    
 
 // query database and determine error is failure
-$result = mysqli_query($con, $sql) or die(mysql_error());
+$result = mysqli_query($con, $sql) or die(mysql_error($con));
 
+// SQL statement pulling all customers
+    
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Daily Summary</title>
+    <title>Incomplete Orders</title>
     <meta charset="utf-8">
     <meta content="Chris Spencer" name="author">
     <meta content="July 2015" name="date">
@@ -49,10 +52,79 @@ $result = mysqli_query($con, $sql) or die(mysql_error());
                <li><a href="../order.html">Order</a></li>
            </ul>
        </nav>
-        <main class="main">
-            <article class="article">
-            <h3>Welcome to the Admin section of Pizza Time!</h3>
-            <p>Please choose your task from the menu to the right.</p>
+        <main class="main-table">
+            <article class="article-table">
+ <h1>Undelivered Pizzas</h1>
+<?php
+    
+$tableData = "";
+    // array elements
+if($result->num_rows > 0 ) {
+    // create row for each record
+    while($row = $result->fetch_assoc()) {
+        // admin id
+        $tableData .= "<tr>";
+        $tableData .= "<td>" . $row['orderID']. "</td>";
+        $tableData .= "<td>" . $row['dateTimePlaced'] . "</td>";
+        $tableData .= "<td>" . $row['pizzaDesc'] . "</td>";
+        $tableData .= "<td>" . $row['priceSub'] . "</td>";
+        $tableData .= "<td>" . $row['tax'] . "</td>";
+        $tableData .= "<td>" . $row['priceTotal'] . "</td>";
+        $tableData .= "<td>" . $row['custID'] . "</td>";
+        $tableData .= "<td>" . $row['custFName']. " ". $row['custLName'] . "</td>";
+        $tableData .= "<td>" . $row['custAddress'] . ", ". $row['custApartment']. ", ". $row['custCity']. ", ". $row['custState']. " ". $row['custZip']. "</td>";
+        $tableData .= "<td>Blah blah</td></tr>";
+        $tableData .= "</tr>";
+//        print $tableData;
+    }
+    
+}
+
+
+
+
+
+
+//foreach($orders as $order) {
+//    $subtotal = number_format($order['subtotal'], 2);
+//    $tax = number_format($order['tax'], 2);
+//    $total = number_format($order['total'],2);
+//    $tableData .= "<tr><td>$order[orderId]</td>
+//        <td>$order[date], $order[time]</td>
+//        <td>$order[pizzaSize] inch,  $order[pizzaCrust], $order[pizzaType],  $order[pizzaToppings]</td>
+//        <td>$subtotal</td>
+//        <td>$tax</td>
+//        <td>$total</td>
+//        <td>$order[name]</td>
+//        <td>$order[address], $order[city], $order[state], $order[zip]</td>
+//        <td><input type='checkbox' name='delivered[$order[orderId]]' value='$order[orderId]'></td></tr>";
+//    }
+print <<<HERE
+    <form name="orders" method="post" action="completeOrder.php">
+    <table rows="4"  border="1">
+    <tr>
+        <th>Ord#</th>
+        <th>Date/Time</th>
+        <th>Pizza Description</th>
+        <th>Sub</th>
+        <th>Tax</th>
+        <th>Total</th>
+        <th>Cust#</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Delivered</th>
+        $tableData
+        
+    </tr>
+
+    <tr></tr>
+    <tr></tr>
+    <tr></tr>
+    </table>
+    <input type="submit" value="Selected Pizzas Delivered">
+    </form>
+HERE;
+?>
             
             </article>
             <aside class="aside">
