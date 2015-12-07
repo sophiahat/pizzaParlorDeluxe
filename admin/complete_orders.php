@@ -26,7 +26,7 @@ $result = mysqli_query($con, $sql) or die(mysql_error($con));
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Incomplete Orders</title>
+    <title>All Completed Orders</title>
     <meta charset="utf-8">
     <meta content="Chris Spencer" name="author">
     <meta content="July 2015" name="date">
@@ -54,7 +54,7 @@ $result = mysqli_query($con, $sql) or die(mysql_error($con));
        </nav>
         <main class="main-table">
             <article class="article-table">
- <h1>Undelivered Pizzas</h1>
+ <h1>All Completed Orders</h1>
 <?php
     
 $tableData = "";
@@ -80,27 +80,7 @@ if($result->num_rows > 0 ) {
     
 }
 
-
-
-
-
-
-//foreach($orders as $order) {
-//    $subtotal = number_format($order['subtotal'], 2);
-//    $tax = number_format($order['tax'], 2);
-//    $total = number_format($order['total'],2);
-//    $tableData .= "<tr><td>$order[orderId]</td>
-//        <td>$order[date], $order[time]</td>
-//        <td>$order[pizzaSize] inch,  $order[pizzaCrust], $order[pizzaType],  $order[pizzaToppings]</td>
-//        <td>$subtotal</td>
-//        <td>$tax</td>
-//        <td>$total</td>
-//        <td>$order[name]</td>
-//        <td>$order[address], $order[city], $order[state], $order[zip]</td>
-//        <td><input type='checkbox' name='delivered[$order[orderId]]' value='$order[orderId]'></td></tr>";
-//    }
 print <<<HERE
-    <form name="orders" method="post" action="completeOrder.php">
     <table rows="4"  border="1">
     <tr>
         <th>Ord#</th>
@@ -121,8 +101,6 @@ print <<<HERE
     <tr></tr>
     <tr></tr>
     </table>
-    <input type="submit" value="Selected Pizzas Delivered">
-    </form>
 HERE;
 ?>
             
@@ -135,6 +113,7 @@ HERE;
                     <li><a href="complete_orders.php">Complete Orders</a></li>
                     <li><a href="daily_summary.php">Daily Summary</a></li>
                     <li><a href="admin_users.php">Admin Users</a></li>
+                    <li><a href="admin_login.php">Log in</a></li>
                 </ul>
             </aside>
         </main>        

@@ -117,6 +117,7 @@ HERE;
                     <li><a href="complete_orders.php">Complete Orders</a></li>
                     <li><a href="daily_summary.php">Daily Summary</a></li>
                     <li><a href="admin_users.php">Admin Users</a></li>
+                    <li><a href="admin_login.php">Log in</a></li>
                 </ul>
             </aside>
         </main>        

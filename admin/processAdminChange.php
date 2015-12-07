@@ -90,7 +90,7 @@ else {
     }
 
 
-     header('Location: ' . "admin_users.php");
+     header('Location: ' . "admin_change.php");
     
 }
 

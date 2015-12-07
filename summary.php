@@ -186,6 +186,8 @@ else {
 }
 
 $date = getdate();
+$day = $date['year']."-". $date['mon']. "-". $date['mday'];
+$time = $date['hours'].":".$date['minutes'].":".$date['seconds'];
 $orderTime = $date['year']."-". $date['mon']. "-". $date['mday']. " ". $date['hours'].":".$date['minutes'].":".$date['seconds'];
 //print $orderTime;
 //print "<br>";
@@ -193,7 +195,7 @@ $orderTime = $date['year']."-". $date['mon']. "-". $date['mday']. " ". $date['ho
 //print "<br>";
 
 // sql statement for writing order
-$sql = "INSERT INTO orders (dateTimePlaced, custID, pizzaDesc, priceSub, tax, priceTotal) VALUES ('$orderTime', '$custID', '$pizzaDesc', '$subtotal', '$tax', '$total')";
+$sql = "INSERT INTO orders (dateTimePlaced, custID, pizzaDesc, priceSub, tax, priceTotal, date, time) VALUES ('$orderTime', '$custID', '$pizzaDesc', '$subtotal', '$tax', '$total', '$day', '$time')";
 
 //print "Final output to database:  $sql";
 // execute SQL statement
