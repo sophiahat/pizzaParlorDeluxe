@@ -35,7 +35,7 @@ else {
                <li><a href="../about.html">About</a></li>
                <li><a href="../menu.html">Menu</a></li>
                <li><a href="../gallery.html">Gallery</a></li>
-               <li><a href="../order.html">Order</a></li>
+               <li><a href="../order.php">Order</a></li>
            </ul>
        </nav>
        <main class="main">
@@ -50,6 +50,11 @@ else {
                 <input type="submit" value="Log in">
                 </p>
                 <span id="loginWarn">
+<?php
+} // end else
+$errorMessage = $_SESSION['loginWarn'];
+print $errorMessage;
+?>
 
                 </span>
 
@@ -74,10 +79,6 @@ else {
         </main>
 
 
-<?php
-} // end else
-$errorMessage = $_SESSION['loginWarn'];
-print $errorMessage;
-?>
+
 
 

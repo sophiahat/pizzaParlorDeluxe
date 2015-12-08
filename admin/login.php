@@ -3,8 +3,8 @@
 //checks to see if the credentials were received
 //echo $_SERVER['HTTP_REFERER'];
 //create variables from accepted refering pages
-$refer1 = "http://localhost:8888/PaceItStuff/PHP/PizzaParlorDeluxe/admin/";
-$refer2 = "http://localhost:8888/PaceItStuff/PHP/PizzaParlorDeluxe/admin/admin_login.php";
+$refer1 = "http://bucket.sandbox.edcc.edu/spen7755/CIS243/PizzaParlor/admin/";
+$refer2 = "http://bucket.sandbox.edcc.edu/spen7755/CIS243/PizzaParlor/admin/admin_login.php";
 
 // check refering pages
 if (($_SERVER['HTTP_REFERER']) != $refer1 && ($_SERVER['HTTP_REFERER'] != $refer2)) {

@@ -7,7 +7,7 @@
 //print_r($_SESSION);
 
 // variable to hold refering page
-$httpReferer = "http://localhost:8888/PaceItStuff/PHP/PizzaParlorDeluxe/admin/password_change.php";
+$httpReferer = "http://bucket.sandbox.edcc.edu/spen7755/CIS243/PizzaParlor/admin/password_change.php";
 
 // create variables 
 $oldPassCorrect = false;

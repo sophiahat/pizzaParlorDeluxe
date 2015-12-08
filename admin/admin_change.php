@@ -48,7 +48,7 @@ $result = mysqli_query($con, $sql) or die(mysql_error());
                    <li><a href="../about.html">About</a></li>
                    <li><a href="../menu.html">Menu</a></li>
                    <li><a href="../gallery.html">Gallery</a></li>
-                   <li><a href="../order.html">Order</a></li>
+                   <li><a href="../order.php">Order</a></li>
                </ul>
            </nav>
         <main class="main">

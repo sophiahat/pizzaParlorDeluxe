@@ -16,7 +16,7 @@ if ($adminLevel != 1) {
 }
 
 // variable to hold refering page
-$httpReferer = "http://localhost:8888/PaceItStuff/PHP/PizzaParlorDeluxe/admin/admin_change.php";
+$httpReferer = "http://bucket.sandbox.edcc.edu/spen7755/CIS243/PizzaParlor/admin/admin_change.php";
 
 
 // session variables
